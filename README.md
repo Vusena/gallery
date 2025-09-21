@@ -57,11 +57,11 @@ console.log(`Server running on port ${PORT}`);
 ### https://gallery-7ss6.onrender.com/
 
 
-![Site URL](public/siterul.png)
+![Site URL](public/images/siterul.png)
 
 <!-- Other Screenshots -->
-![Render Logs](public/renderlogs.png)
-![Database Connection](public/dbconnection.png)
-![MongoDB Driver](public/mongodbdriver.png)
-![Web Service Creation](public/webservicecreation.png)
-![Web Service Creation 2](public/webservicecreation2.png)
+![Render Logs](public/images/renderlogs.png)
+![Database Connection](public/images/bconnection.png)
+![MongoDB Driver](public/images/mongodbdriver.png)
+![Web Service Creation](public/images/webservicecreation.png)
+![Web Service Creation 2](public/images/webservicecreation2.png)
