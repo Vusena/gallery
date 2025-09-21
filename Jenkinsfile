@@ -27,9 +27,32 @@ pipeline {
             }
         }
 
+        stage('Run Tests') {
+            steps {
+                script {
+                    try {
+                        sh 'npm test'
+                    } catch (err) {
+                        // Fail the build if tests fail
+                        currentBuild.result = 'FAILURE'
+
+                        // Optional: send email
+                        emailext (
+                            subject: "Jenkins Build Failed: ${env.JOB_NAME}",
+                            body: "Tests failed. Check the console output at ${env.BUILD_URL}",
+                            to: "youremail@example.com"
+                        )
+
+                        // Re-throw to mark build as failed
+                        throw err
+                    }
+                }
+            }
+        }
+
         stage('Deploy to Render') {
             steps {
-                // Replace this with your actual Render Deploy Hook
+
                 sh 'curl -X POST https://api.render.com/deploy/srv-d37rsh8gjchc73cha5gg?key=lt2ylZma3wY'
             }
         }
