@@ -8,11 +8,17 @@ let index = require('./routes/index');
 let image = require('./routes/image');
 
 // connecting the database
-let mongodb_url = 'mongodb://localhost:27017/';
-let dbName = 'darkroom';
-mongoose.connect(`${mongodb_url}${dbName}`,{ useNewUrlParser: true , useUnifiedTopology: true }, (err)=>{
-    if (err) console.log(err)
+const USERNAME = "vusena";
+const PASSWORD = "Tuesday%4020";   // URL-encoded password
+const DB_NAME = "gallerydb";
+
+const mongoURI = `mongodb+srv://${USERNAME}:${PASSWORD}@gallerydb.kaappuz.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`;
+
+mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
+    if (err) console.log("MongoDB connection error:", err);
+    else console.log("✅ Database connected successfully to MongoDB Atlas");
 });
+
 
 // test if the database has connected successfully
 let db = mongoose.connection;
