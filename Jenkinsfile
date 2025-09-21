@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        nodejs "nodejs"   // must match the name you configured in Jenkins (Manage Jenkins → Global Tool Configuration)
+        nodejs "nodejs"
     }
 
     stages {
@@ -22,6 +22,25 @@ pipeline {
             steps {
                 sh 'node -v'
                 sh 'npm -v'
+                sh 'npm run lint || echo "No lint step defined, skipping..."'
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                script {
+                    try {
+                        sh 'npm test'
+                    } catch (err) {
+                        currentBuild.result = 'FAILURE'
+                        emailext (
+                            subject: "Jenkins Build Failed: ${env.JOB_NAME}",
+                            body: "Tests failed. Check console output: ${env.BUILD_URL}",
+                            to: "youremail@example.com"
+                        )
+                        throw err
+                    }
+                }
             }
         }
 
