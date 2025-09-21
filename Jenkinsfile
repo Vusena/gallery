@@ -5,6 +5,10 @@ pipeline {
         nodejs "nodejs"
     }
 
+    environment {
+        RENDER_URL = 'https://gallery-7ss6.onrender.com/'
+    }
+
     stages {
         stage('Clone Repository') {
             steps {
@@ -46,9 +50,18 @@ pipeline {
 
         stage('Deploy to Render') {
             steps {
-                // Replace this with your Render Deploy Hook URL
-                sh 'curl -X POST https://api.render.com/deploy/srv-xxxx?key=YOUR_DEPLOY_KEY'
+                sh 'curl -X POST https://api.render.com/deploy/srv-d37rsh8gjchc73cha5gg?key=lt2ylZma3wY'
             }
+        }
+    }
+
+    post {
+        success {
+            slackSend(
+                channel: "#eunice_ip1",
+                color: "good",
+                message: "Deployment SUCCESS!\nBuild ID: ${env.BUILD_NUMBER}\nRender URL: ${env.RENDER_URL}\nMore info: ${env.BUILD_URL}"
+            )
         }
     }
 }
